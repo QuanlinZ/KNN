@@ -69,13 +69,17 @@ class KdTreeFindNearest():
                     kd_root=pBack.right_child   #如果target位于左子空间，就应进入右子空间
                 else:
                     kd_root=pBack.left_child
-                if kd_root:
+                while （kd_root）:
                     search_path.append(kd_root)
                     if self.GetDistance(kd_root.location,target) < self.GetDistance(nearest.location,target):
 #                         depth+=1
                         nearest=kd_root
                         minxDistance=self.GetDistance(kd_root.location,target)
                         nearList.append([nearest.location,minxDistance])
+                    if target[kd_root.split] <= kd_root.location[kd_root.split]:
+                         kd_root = kd_root.left_child
+                    else:
+                         kd_root = kd_root.right_child
                         
         nearList=sorted(nearList, key=lambda node: node[-1])        
         return nearList
